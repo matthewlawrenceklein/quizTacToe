@@ -25,8 +25,6 @@ function renderCategory(question, squareId){
     questionDiv.dataset.squareId = squareId
     questionDiv.id = question.id
 
-    console.log(questionDiv.className);
-
     let txt = decodeHtml(question.category)
     let questionText = txt.value;
 
@@ -52,6 +50,7 @@ function addGridListener(){
                     if(questionDiv.dataset.displayState !== 'showing') {
                         questionDiv.innerHTML = `
                             ${question.innerText} <br>
+                            ${questionData.answer} <br>
                             <button value="true" data-id='${questionData.id}-true'> TRUE </button>
                             <button value="false" data-id='${questionData.id}-false'> FALSE </button>
                         `
@@ -101,19 +100,48 @@ function winLoseStateListener(){
     let rightSquareArray = []
     let wrongSquareArray = []
 
+    function winState(condition, message){
+        if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
+            console.log(message);
+        }
+        if (condition.includes('3') && condition.includes('4') && condition.includes('5')){
+            console.log(message);
+        }
+        if (condition.includes('6') && condition.includes('7') && condition.includes('8')){
+            console.log(message);
+        }
+        if (condition.includes('0') && condition.includes('3') && condition.includes('6')){
+            console.log(message);
+        }
+        if (condition.includes('1') && condition.includes('4') && condition.includes('7')){
+            console.log(message);
+        }
+        if (condition.includes('2') && condition.includes('5') && condition.includes('8')){
+            console.log(message);
+        }
+        if (condition.includes('0') && condition.includes('4') && condition.includes('8')){
+            console.log(message);
+        }
+        if (condition.includes('2') && condition.includes('4') && condition.includes('6')){
+            console.log(message);
+        }
+    }
+    
     if (rightAnswers.length > 0){
         for(let i = 0; i < rightAnswers.length; i++){
             rightSquareArray.push(rightAnswers[i].dataset.squareId)
+
+            winState(rightSquareArray, 'you win')
         }
     }
    
     if(wrongAnswers.length > 0){
         for(let i = 0; i < wrongAnswers.length; i++){
             wrongSquareArray.push(wrongAnswers[i].dataset.squareId)
+
+            winState(wrongSquareArray, 'you lose')
         }
     }
-  
-
 }
 
 
