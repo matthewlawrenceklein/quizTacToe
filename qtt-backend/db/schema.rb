@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(version: 2020_08_16_190236) do
   create_table "questions", force: :cascade do |t|
     t.string "category"
     t.string "question"
-    t.boolean "answer"
+    t.string "answer"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "difficulty"
