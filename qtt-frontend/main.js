@@ -7,19 +7,21 @@ function loadQuestions(){
         .then(resp => resp.json())
         .then(questionsData => {      
             for (let step = 0; step < 9; step++) {
+                let squareId = step 
                 const randomQuestionObject = questionsData[Math.floor ( Math.random() * questionsData.length )]
-                renderCategory(randomQuestionObject)
+                renderCategory(randomQuestionObject, squareId)
             }
         addGridListener()
         })
 }
 
-function renderCategory(question){
+function renderCategory(question, squareId){
 
     let mainDiv = document.getElementById('main-div')
     let questionDiv = document.createElement('div')
     questionDiv.className = 'item'
     questionDiv.dataset.id = question.id 
+    questionDiv.dataset.squareId = squareId
     questionDiv.id = question.id
 
     let txt = decodeHtml(question.category)
@@ -64,7 +66,6 @@ function answerListener(question){
 
     let targetDiv = document.getElementById(`${question.id}`)
     targetDiv.addEventListener('click', function(event){
-        event.preventDefault()
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value === question.answer.toString()){
                 targetDiv.innerHTML += 'asd'
