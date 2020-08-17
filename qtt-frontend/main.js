@@ -63,7 +63,6 @@ function addGridListener(){
 
 }
 
-
 function decodeHtml(html) {
     let txt = document.createElement('textarea');
     txt.innerHTML = html;
@@ -74,24 +73,26 @@ function answerListener(question){
 
     let targetDiv = document.getElementById(`${question.id}`)
     targetDiv.addEventListener('click', function(event){
+
+        if(userTurnCount === 8){
+            console.log('no one wins');
+        }
+
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value == question.answer.toLowerCase()){
                 targetDiv.className += 'rightAnswerStyling'
                 targetDiv.innerHTML = 'X'
                 userTurnCount += 1
-
                 winLoseStateListener()
             } else {
                 targetDiv.className += `wrongAnswerStyling`
                 targetDiv.innerHTML = 'O'
                 userTurnCount +=1
-
                 winLoseStateListener()
             }
         }
     })
 }
-
 
 function winLoseStateListener(){
 
@@ -130,7 +131,6 @@ function winLoseStateListener(){
     if (rightAnswers.length > 0){
         for(let i = 0; i < rightAnswers.length; i++){
             rightSquareArray.push(rightAnswers[i].dataset.squareId)
-
             winState(rightSquareArray, 'you win')
         }
     }
@@ -138,7 +138,6 @@ function winLoseStateListener(){
     if(wrongAnswers.length > 0){
         for(let i = 0; i < wrongAnswers.length; i++){
             wrongSquareArray.push(wrongAnswers[i].dataset.squareId)
-
             winState(wrongSquareArray, 'you lose')
         }
     }
