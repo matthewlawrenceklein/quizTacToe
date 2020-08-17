@@ -16,7 +16,6 @@ function loadQuestions(){
 }
 
 function renderCategory(question, squareId){
-
     let mainDiv = document.getElementById('main-div')
     let questionDiv = document.createElement('div')
     questionDiv.className = 'item'
@@ -73,14 +72,13 @@ function answerListener(question){
     let targetDiv = document.getElementById(`${question.id}`)
     targetDiv.addEventListener('click', function(event){
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
-            if (event.target.value === question.answer.toString()){
-                console.log(event.target.value);
-                console.log(question.answer)
-                // targetDiv.innerHTML = 'you got it right'
+            if (event.target.value == question.answer.toLowerCase()){
+                targetDiv.className = 'item rightAnswerStyling'
+                targetDiv.innerHTML = 'X'
             } else {
-                // targetDiv.innerHTML = 'you got it wrong'
-                console.log(event.target.value);
-                console.log(question.answer)
+                targetDiv.className = 'item wrongAnswerStyling'
+                targetDiv.innerHTML = 'O'
+
             }
         }
     })

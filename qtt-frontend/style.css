@@ -16,3 +16,16 @@
     border: 2px solid;
     border-color: darkcyan;
   }
+
+  .wrongAnswerStyling {
+
+    background-color: palevioletred;
+    font-size: 500%;
+
+  }
+
+  .rightAnswerStyling {
+
+    background-color: yellowgreen;
+    font-size: 500%;
+  }
