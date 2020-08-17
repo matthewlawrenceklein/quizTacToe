@@ -34,20 +34,26 @@ function renderCategory(question, squareId){
 function addGridListener(){
 
     const grid = document.getElementById('main-div')
+
     grid.addEventListener('click', function(event){
-        if (event.target.dataset.id){
+        if (event.target.dataset.id && event.target.className !== "showing"){
             const questionId = event.target.dataset.id;
 
             fetch(`http://localhost:3000/questions/${questionId}`)
                 .then(resp => resp.json())
                 .then(questionData => {
                     let questionDiv = document.getElementById(`${questionData.id}`);
+                    
                     let question = decodeHtml(questionData.question) 
-                    questionDiv.innerHTML = `
-                        ${question.innerText} <br>
-                        <button value="true" data-id='${questionData.id}-true'> TRUE </button>
-                        <button value="false" data-id='${questionData.id}-false'> FALSE </button>
-                    `
+                    
+                    if(questionDiv.dataset.displayState !== 'showing') {
+                        questionDiv.innerHTML = `
+                            ${question.innerText} <br>
+                            <button value="true" data-id='${questionData.id}-true'> TRUE </button>
+                            <button value="false" data-id='${questionData.id}-false'> FALSE </button>
+                        `
+                    }
+                    questionDiv.dataset.displayState = 'showing'
                     answerListener(questionData)
                 })
         }
@@ -68,9 +74,13 @@ function answerListener(question){
     targetDiv.addEventListener('click', function(event){
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value === question.answer.toString()){
-                targetDiv.innerHTML += 'asd'
+                console.log(event.target.value);
+                console.log(question.answer)
+                // targetDiv.innerHTML = 'you got it right'
             } else {
-                targetDiv.innerHTML = 'fklasjsadkj'
+                // targetDiv.innerHTML = 'you got it wrong'
+                console.log(event.target.value);
+                console.log(question.answer)
             }
         }
     })
