@@ -3,7 +3,6 @@ function main(){
 }
 let userTurnCount = 0 
 
-
 function loadQuestions(){
     fetch(`http://localhost:3000/questions/`)
         .then(resp => resp.json())
@@ -102,8 +101,12 @@ function winLoseStateListener(){
     let wrongSquareArray = []
 
     function winState(condition, message){
+        if (message === "you win") {
+            var score = `your score is ${Math.floor(10000 / userTurnCount)}`
+        }
         if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
             console.log(message);
+            console.log(score);
         }
         if (condition.includes('3') && condition.includes('4') && condition.includes('5')){
             console.log(message);
