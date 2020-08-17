@@ -1,6 +1,8 @@
 function main(){
     loadQuestions()
 }
+let userTurnCount = 0 
+
 
 function loadQuestions(){
     fetch(`http://localhost:3000/questions/`)
@@ -75,10 +77,13 @@ function answerListener(question){
             if (event.target.value == question.answer.toLowerCase()){
                 targetDiv.className = 'item rightAnswerStyling'
                 targetDiv.innerHTML = 'X'
+                userTurnCount += 1
+                console.log(userTurnCount);
             } else {
                 targetDiv.className = 'item wrongAnswerStyling'
                 targetDiv.innerHTML = 'O'
-
+                userTurnCount +=1
+                console.log(userTurnCount);
             }
         }
     })
