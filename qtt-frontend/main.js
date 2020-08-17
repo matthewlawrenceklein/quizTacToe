@@ -20,10 +20,12 @@ function loadQuestions(){
 function renderCategory(question, squareId){
     let mainDiv = document.getElementById('main-div')
     let questionDiv = document.createElement('div')
-    questionDiv.className = 'item'
+    questionDiv.className = `${squareId} item  `
     questionDiv.dataset.id = question.id 
     questionDiv.dataset.squareId = squareId
     questionDiv.id = question.id
+
+    console.log(questionDiv.className);
 
     let txt = decodeHtml(question.category)
     let questionText = txt.value;
@@ -75,22 +77,44 @@ function answerListener(question){
     targetDiv.addEventListener('click', function(event){
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value == question.answer.toLowerCase()){
-                targetDiv.className = 'item rightAnswerStyling'
+                targetDiv.className += 'rightAnswerStyling'
                 targetDiv.innerHTML = 'X'
                 userTurnCount += 1
-                console.log(userTurnCount);
+
+                winLoseStateListener()
             } else {
-                targetDiv.className = 'item wrongAnswerStyling'
+                targetDiv.className += `wrongAnswerStyling`
                 targetDiv.innerHTML = 'O'
                 userTurnCount +=1
-                console.log(userTurnCount);
+
+                winLoseStateListener()
             }
         }
     })
 }
 
 
+function winLoseStateListener(){
 
+    const rightAnswers = document.getElementsByClassName('item rightAnswerStyling')
+    const wrongAnswers = document.getElementsByClassName('item wrongAnswerStyling')
+    let rightSquareArray = []
+    let wrongSquareArray = []
+
+    if (rightAnswers.length > 0){
+        for(let i = 0; i < rightAnswers.length; i++){
+            rightSquareArray.push(rightAnswers[i].dataset.squareId)
+        }
+    }
+   
+    if(wrongAnswers.length > 0){
+        for(let i = 0; i < wrongAnswers.length; i++){
+            wrongSquareArray.push(wrongAnswers[i].dataset.squareId)
+        }
+    }
+  
+
+}
 
 
 
