@@ -1,20 +1,40 @@
 * {
-    background: gainsboro;
+    font-family: 'Baloo Tamma 2', cursive;
+}
+
+#banner {
+  color: pink;
+  text-align: center;
+  margin-top: 40px;
+}
+.master-container{
+  display: flex;
+  justify-content: center;
 }
 
 .container {
+    /* background: gainsboro; */
+    padding-top: 100px;
     display: flex;
+    width: 70%;
     flex-wrap: wrap;
+    align-items: center;
     justify-content: space-between;
+    border-radius: 25px;
+    margin: 20px;
   }
   
   .item {
     flex: 0 32%;
-    height: 100px;
+    width: 70px;
+    height: 120px;
     margin-bottom: 2%; /* (100-32*3)/2 */
     background-color: burlywood;
-    border: 2px solid;
+    border: 3px solid;
+    box-shadow: 3px 3px teal;
     border-color: darkcyan;
+    margin: 5px;
+    border-radius: 20px;
   }
 
   .wrongAnswerStyling {
@@ -28,4 +48,22 @@
 
     background-color: yellowgreen;
     font-size: 500%;
+  }
+
+  body {
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 700% 700%;
+    animation: gradient 15s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
