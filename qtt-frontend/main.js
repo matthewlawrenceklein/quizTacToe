@@ -1,10 +1,13 @@
 function main(){
-    loadQuestions()
+    loadQuestions('easy')
 }
-let userTurnCount = 0 
 
-function loadQuestions(){
-    fetch(`http://localhost:3000/questions/`)
+let userTotalScore = 0 
+let userTurnCount = 0 
+let currentLevel = "easy"
+
+function loadQuestions(difficulty){
+    fetch(`http://localhost:3000/${difficulty}_questions/`)
         .then(resp => resp.json())
         .then(questionsData => {      
             for (let step = 0; step < 9; step++) {
@@ -12,7 +15,7 @@ function loadQuestions(){
                 const randomQuestionObject = questionsData[Math.floor ( Math.random() * questionsData.length )]
                 renderCategory(randomQuestionObject, squareId)
             }
-        addGridListener()
+        addGridListener(difficulty)
         })
 }
 
@@ -21,6 +24,7 @@ function renderCategory(question, squareId){
     let questionDiv = document.createElement('div')
     questionDiv.className = `${squareId} item  `
     questionDiv.dataset.id = question.id 
+    questionDiv.dataset.type = 'card'
     questionDiv.dataset.squareId = squareId
     questionDiv.id = question.id
 
@@ -31,15 +35,15 @@ function renderCategory(question, squareId){
     mainDiv.appendChild(questionDiv)
 }
 
-function addGridListener(){
+function addGridListener(difficulty){
 
     const grid = document.getElementById('main-div')
 
     grid.addEventListener('click', function(event){
-        if (event.target.dataset.id && event.target.className !== "showing"){
+        if (event.target.dataset.type && event.target.className !== "showing"){
             const questionId = event.target.dataset.id;
 
-            fetch(`http://localhost:3000/questions/${questionId}`)
+            fetch(`http://localhost:3000/${difficulty}_questions/${questionId}`)
                 .then(resp => resp.json())
                 .then(questionData => {
                     let questionDiv = document.getElementById(`${questionData.id}`);
@@ -50,6 +54,7 @@ function addGridListener(){
                         questionDiv.innerHTML = `
                             ${question.innerText} <br>
                             ${questionData.answer} <br>
+                            ${questionData.difficulty} <br>
                             <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
                             <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
                         `
@@ -101,12 +106,21 @@ function winLoseStateListener(){
     let wrongSquareArray = []
 
     function winState(condition, message){
-        if (message === "you win") {
-            var score = `your score is ${Math.floor(10000 / userTurnCount)}`
+
+        function winSteps(){
+            let roundScore = Math.floor(9000 / userTurnCount)
+            userTotalScore += roundScore 
+            userTurnCount = 0
+            console.log(`Your score is ${userTotalScore}`);
+            let mainDiv = document.getElementById('main-div')
+            mainDiv.innerText = ''
+            currentLevel = 'medium'
+            loadQuestions(currentLevel)
         }
+
         if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
-            console.log(message);
-            console.log(score);
+            console.log(message);  
+            winSteps() 
         }
         if (condition.includes('3') && condition.includes('4') && condition.includes('5')){
             console.log(message);

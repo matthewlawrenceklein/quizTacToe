@@ -27,7 +27,7 @@
   .item {
     flex: 0 32%;
     width: 70px;
-    height: 120px;
+    height: 160px;
     margin-bottom: 2%; /* (100-32*3)/2 */
     background-color: burlywood;
     border: 3px solid;
