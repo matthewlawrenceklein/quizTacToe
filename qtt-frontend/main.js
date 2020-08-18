@@ -50,8 +50,8 @@ function addGridListener(){
                         questionDiv.innerHTML = `
                             ${question.innerText} <br>
                             ${questionData.answer} <br>
-                            <button value="true" data-id='${questionData.id}-true'> TRUE </button>
-                            <button value="false" data-id='${questionData.id}-false'> FALSE </button>
+                            <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
+                            <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
                         `
                     }
                     questionDiv.dataset.displayState = 'showing'
