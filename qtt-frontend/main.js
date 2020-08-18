@@ -1,10 +1,10 @@
-function main(){
-    loadQuestions('easy')
-}
-
+let currentLevel = "easy"
 let userTotalScore = 0 
 let userTurnCount = 0 
-let currentLevel = "easy"
+
+function main(){
+    loadQuestions(currentLevel)
+}
 
 function loadQuestions(difficulty){
     fetch(`http://localhost:3000/${difficulty}_questions/`)
@@ -12,10 +12,10 @@ function loadQuestions(difficulty){
         .then(questionsData => {      
             for (let step = 0; step < 9; step++) {
                 let squareId = step 
-                const randomQuestionObject = questionsData[Math.floor ( Math.random() * questionsData.length )]
+                let randomQuestionObject = questionsData[Math.floor ( Math.random() * questionsData.length )]
                 renderCategory(randomQuestionObject, squareId)
             }
-        addGridListener(difficulty)
+            addGridListener(currentLevel)
         })
 }
 
@@ -26,6 +26,7 @@ function renderCategory(question, squareId){
     questionDiv.dataset.id = question.id 
     questionDiv.dataset.type = 'card'
     questionDiv.dataset.squareId = squareId
+    questionDiv.dataset.displayState = ''
     questionDiv.id = question.id
 
     let txt = decodeHtml(question.category)
@@ -33,6 +34,7 @@ function renderCategory(question, squareId){
 
     questionDiv.innerText = questionText
     mainDiv.appendChild(questionDiv)
+
 }
 
 function addGridListener(difficulty){
@@ -40,12 +42,13 @@ function addGridListener(difficulty){
     const grid = document.getElementById('main-div')
 
     grid.addEventListener('click', function(event){
-        if (event.target.dataset.type && event.target.className !== "showing"){
+        if (event.target.dataset.type){
             const questionId = event.target.dataset.id;
 
             fetch(`http://localhost:3000/${difficulty}_questions/${questionId}`)
                 .then(resp => resp.json())
                 .then(questionData => {
+                    console.log(questionData.difficulty);
                     let questionDiv = document.getElementById(`${questionData.id}`);
                     
                     let question = decodeHtml(questionData.question) 

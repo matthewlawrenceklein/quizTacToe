@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :highscores
+  resources :scoreboards
   resources :easy_questions
   resources :hard_questions
   resources :medium_questions
