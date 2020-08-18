@@ -9,7 +9,8 @@ function main(){
 function loadQuestions(difficulty){
     fetch(`http://localhost:3000/${difficulty}_questions/`)
         .then(resp => resp.json())
-        .then(questionsData => {      
+        .then(questionsData => {  
+            
             for (let step = 0; step < 9; step++) {
                 let squareId = step 
                 let randomQuestionObject = questionsData[Math.floor ( Math.random() * questionsData.length )]
@@ -36,38 +37,37 @@ function renderCategory(question, squareId){
     mainDiv.appendChild(questionDiv)
 
 }
+function handleGridClick(event){
+    if (event.target.dataset.type){
+        const questionId = event.target.dataset.id;
+        console.log(currentLevel);
+        fetch(`http://localhost:3000/${currentLevel}_questions/${questionId}`)
+            .then(resp => resp.json())
+            .then(questionData => {
+                // console.log(questionData.difficulty);
+                let questionDiv = document.getElementById(`${questionData.id}`);
+                
+                let question = decodeHtml(questionData.question) 
+                
+                if(questionDiv.dataset.displayState !== 'showing') {
+                    questionDiv.innerHTML = `
+                        ${question.innerText} <br>
+                        ${questionData.answer} <br>
+                        ${questionData.difficulty} <br>
+                        <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
+                        <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
+                    `
+                }
+                questionDiv.dataset.displayState = 'showing'
+                answerListener(questionData)
+            })
+    }
+}
 
 function addGridListener(difficulty){
 
     const grid = document.getElementById('main-div')
-
-    grid.addEventListener('click', function(event){
-        if (event.target.dataset.type){
-            const questionId = event.target.dataset.id;
-
-            fetch(`http://localhost:3000/${difficulty}_questions/${questionId}`)
-                .then(resp => resp.json())
-                .then(questionData => {
-                    console.log(questionData.difficulty);
-                    let questionDiv = document.getElementById(`${questionData.id}`);
-                    
-                    let question = decodeHtml(questionData.question) 
-                    
-                    if(questionDiv.dataset.displayState !== 'showing') {
-                        questionDiv.innerHTML = `
-                            ${question.innerText} <br>
-                            ${questionData.answer} <br>
-                            ${questionData.difficulty} <br>
-                            <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
-                            <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
-                        `
-                    }
-                    questionDiv.dataset.displayState = 'showing'
-                    answerListener(questionData)
-                })
-        }
-    })
-
+    grid.addEventListener('click', handleGridClick)
 }
 
 function decodeHtml(html) {
@@ -78,6 +78,7 @@ function decodeHtml(html) {
 
 function answerListener(question){
 
+    console.log(question.difficulty);
     let targetDiv = document.getElementById(`${question.id}`)
     targetDiv.addEventListener('click', function(event){
 
@@ -87,11 +88,15 @@ function answerListener(question){
 
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value == question.answer.toLowerCase()){
-                targetDiv.className += 'rightAnswerStyling'
+                // targetDiv.className = ''
+                // targetDiv.className += 'item '
+                targetDiv.className += 'rightAnswerStyling '
                 targetDiv.innerHTML = 'X'
                 userTurnCount += 1
                 winLoseStateListener()
             } else {
+                // targetDiv.className = ''
+                // targetDiv.className += 'item '
                 targetDiv.className += `wrongAnswerStyling`
                 targetDiv.innerHTML = 'O'
                 userTurnCount +=1
@@ -116,7 +121,9 @@ function winLoseStateListener(){
             userTurnCount = 0
             console.log(`Your score is ${userTotalScore}`);
             let mainDiv = document.getElementById('main-div')
-            mainDiv.innerText = ''
+            const grid = document.getElementById('main-div')
+            grid.removeEventListener('click', handleGridClick)
+            mainDiv.innerHTML = ''
             currentLevel = 'medium'
             loadQuestions(currentLevel)
         }
@@ -162,10 +169,6 @@ function winLoseStateListener(){
         }
     }
 }
-
-
-
-
 
 
 
