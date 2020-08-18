@@ -40,11 +40,9 @@ function renderCategory(question, squareId){
 function handleGridClick(event){
     if (event.target.dataset.type){
         const questionId = event.target.dataset.id;
-        console.log(currentLevel);
         fetch(`http://localhost:3000/${currentLevel}_questions/${questionId}`)
             .then(resp => resp.json())
             .then(questionData => {
-                // console.log(questionData.difficulty);
                 let questionDiv = document.getElementById(`${questionData.id}`);
                 
                 let question = decodeHtml(questionData.question) 
@@ -88,15 +86,11 @@ function answerListener(question){
 
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
             if (event.target.value == question.answer.toLowerCase()){
-                // targetDiv.className = ''
-                // targetDiv.className += 'item '
                 targetDiv.className += 'rightAnswerStyling '
                 targetDiv.innerHTML = 'X'
                 userTurnCount += 1
                 winLoseStateListener()
             } else {
-                // targetDiv.className = ''
-                // targetDiv.className += 'item '
                 targetDiv.className += `wrongAnswerStyling`
                 targetDiv.innerHTML = 'O'
                 userTurnCount +=1
@@ -113,48 +107,6 @@ function winLoseStateListener(){
     let rightSquareArray = []
     let wrongSquareArray = []
 
-    function winState(condition, message){
-
-        function winSteps(){
-            let roundScore = Math.floor(9000 / userTurnCount)
-            userTotalScore += roundScore 
-            userTurnCount = 0
-            console.log(`Your score is ${userTotalScore}`);
-            let mainDiv = document.getElementById('main-div')
-            const grid = document.getElementById('main-div')
-            grid.removeEventListener('click', handleGridClick)
-            mainDiv.innerHTML = ''
-            currentLevel = 'medium'
-            loadQuestions(currentLevel)
-        }
-
-        if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
-            console.log(message);  
-            winSteps() 
-        }
-        if (condition.includes('3') && condition.includes('4') && condition.includes('5')){
-            console.log(message);
-        }
-        if (condition.includes('6') && condition.includes('7') && condition.includes('8')){
-            console.log(message);
-        }
-        if (condition.includes('0') && condition.includes('3') && condition.includes('6')){
-            console.log(message);
-        }
-        if (condition.includes('1') && condition.includes('4') && condition.includes('7')){
-            console.log(message);
-        }
-        if (condition.includes('2') && condition.includes('5') && condition.includes('8')){
-            console.log(message);
-        }
-        if (condition.includes('0') && condition.includes('4') && condition.includes('8')){
-            console.log(message);
-        }
-        if (condition.includes('2') && condition.includes('4') && condition.includes('6')){
-            console.log(message);
-        }
-    }
-    
     if (rightAnswers.length > 0){
         for(let i = 0; i < rightAnswers.length; i++){
             rightSquareArray.push(rightAnswers[i].dataset.squareId)
@@ -168,6 +120,72 @@ function winLoseStateListener(){
             winState(wrongSquareArray, 'you lose')
         }
     }
+
+    function winState(condition, message){
+
+    
+        if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
+            winSteps(message) 
+        }
+        if (condition.includes('3') && condition.includes('4') && condition.includes('5')){
+            winSteps(message) 
+        }
+        if (condition.includes('6') && condition.includes('7') && condition.includes('8')){
+            winSteps(message) 
+        }
+        if (condition.includes('0') && condition.includes('3') && condition.includes('6')){
+            winSteps(message) 
+        }
+        if (condition.includes('1') && condition.includes('4') && condition.includes('7')){
+            winSteps(message) 
+        }
+        if (condition.includes('2') && condition.includes('5') && condition.includes('8')){
+            winSteps(message) 
+        }
+        if (condition.includes('0') && condition.includes('4') && condition.includes('8')){
+            winSteps(message) 
+        }
+        if (condition.includes('2') && condition.includes('4') && condition.includes('6')){
+            winSteps(message) 
+        }
+    }
+    
+    function winSteps(message){
+        let roundScore = Math.floor(9000 / userTurnCount)
+
+        if (message === 'you win'){
+
+            userTotalScore += roundScore 
+            userTurnCount = 0
+            console.log(`Your score is ${userTotalScore}`);
+            let mainDiv = document.getElementById('main-div')
+            const grid = document.getElementById('main-div')
+            grid.removeEventListener('click', handleGridClick)
+            mainDiv.innerHTML = ''
+                if(currentLevel === 'easy'){
+                    currentLevel = 'medium'
+                    loadQuestions(currentLevel)
+                } else if (currentLevel === 'medium'){
+                    currentLevel = 'hard'
+                    loadQuestions(currentLevel)
+                } else if (currentLevel === 'hard'){
+                    alert(message)
+                }
+        } else if (message === 'you lose'){
+
+            alert(message)
+            currentLevel = 'easy'
+            userTurnCount = 0
+            console.log(`Your score is ${userTotalScore}`);
+            let mainDiv = document.getElementById('main-div')
+            const grid = document.getElementById('main-div')
+            grid.removeEventListener('click', handleGridClick)
+            mainDiv.innerHTML = ''
+
+            loadQuestions(currentLevel)
+        }
+    }
+    
 }
 
 
