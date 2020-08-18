@@ -1,21 +1,29 @@
 require 'httparty'
 
-Question.destroy_all 
+EasyQuestion.destroy_all 
+MediumQuestion.destroy_all 
+HardQuestion.destroy_all
 
-easy_response = HTTParty.get('https://opentdb.com/api.php?amount=100&difficulty=easy&type=boolean')
+easy_response = HTTParty.get('https://opentdb.com/api.php?amount=50&difficulty=easy&type=boolean')
 easy_hash = easy_response.to_hash 
 
 easy_hash['results'].each do |question|
-    Question.create(category: question["category"], question: question["question"], answer: question["correct_answer"], difficulty: question["difficulty"]) 
+    EasyQuestion.create(category: question["category"], question: question["question"], answer: question["correct_answer"], difficulty: question["difficulty"]) 
 end 
 
 
 
-medium_response = HTTParty.get('https://opentdb.com/api.php?amount=100&difficulty=medium&type=boolean')
+medium_response = HTTParty.get('https://opentdb.com/api.php?amount=50&difficulty=medium&type=boolean')
 medium_hash = medium_response.to_hash
 
 medium_hash['results'].each do |question|
-    Question.create(category: question["category"], question: question["question"], answer: question["correct_answer"], difficulty: question["difficulty"]) 
+    MediumQuestion.create(category: question["category"], question: question["question"], answer: question["correct_answer"], difficulty: question["difficulty"]) 
 end 
 
 
+hard_response = HTTParty.get('https://opentdb.com/api.php?amount=50&difficulty=hard&type=boolean')
+hard_hash = hard_response.to_hash
+
+hard_hash['results'].each do |question|
+    HardQuestion.create(category: question["category"], question: question["question"], answer: question["correct_answer"], difficulty: question["difficulty"]) 
+end 

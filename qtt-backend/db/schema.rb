@@ -10,15 +10,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_190236) do
+ActiveRecord::Schema.define(version: 2020_08_18_142841) do
 
-  create_table "questions", force: :cascade do |t|
+  create_table "easy_questions", force: :cascade do |t|
     t.string "category"
     t.string "question"
     t.string "answer"
+    t.string "difficulty"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "hard_questions", force: :cascade do |t|
+    t.string "category"
+    t.string "question"
+    t.string "answer"
     t.string "difficulty"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "medium_questions", force: :cascade do |t|
+    t.string "category"
+    t.string "question"
+    t.string "answer"
+    t.string "difficulty"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

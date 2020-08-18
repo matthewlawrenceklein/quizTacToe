@@ -1,0 +1,2 @@
+class HardQuestion < ApplicationRecord
+end

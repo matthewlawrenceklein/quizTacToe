@@ -1,9 +1,10 @@
-class CreateQuestions < ActiveRecord::Migration[6.0]
+class CreateHardQuestions < ActiveRecord::Migration[6.0]
   def change
-    create_table :questions do |t|
+    create_table :hard_questions do |t|
       t.string :category
       t.string :question
       t.string :answer
+      t.string :difficulty
 
       t.timestamps
     end

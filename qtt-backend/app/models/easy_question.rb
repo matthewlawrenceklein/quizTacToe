@@ -1,0 +1,2 @@
+class EasyQuestion < ApplicationRecord
+end

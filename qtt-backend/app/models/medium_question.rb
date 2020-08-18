@@ -1,0 +1,2 @@
+class MediumQuestion < ApplicationRecord
+end
