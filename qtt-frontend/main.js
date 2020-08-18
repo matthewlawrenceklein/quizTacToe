@@ -3,8 +3,22 @@ let userTotalScore = 0
 let userTurnCount = 0 
 
 function main(){
-    loadQuestions(currentLevel)
+    startModalListener()
 }
+
+function startModalListener(){
+    button = document.getElementById('modal-start-btn')
+    button.addEventListener('click', function(event){
+    loadQuestions(currentLevel)
+    let scoreCounter = document.createElement('p')
+    scoreCounter.id = 'score-counter'
+    scoreCounter.innerText = `Score: ${userTotalScore}`
+    let banner = document.getElementById('banner')
+    banner.appendChild(scoreCounter) 
+    })
+}
+
+
 
 function loadQuestions(difficulty){
     fetch(`http://localhost:3000/${difficulty}_questions/`)
@@ -156,6 +170,10 @@ function winLoseStateListener(){
         if (message === 'you win'){
 
             userTotalScore += roundScore 
+            let counter = document.getElementById('score-counter')
+            counter.innerText =  `Score: ${userTotalScore}`
+
+
             userTurnCount = 0
             console.log(`Your score is ${userTotalScore}`);
             let mainDiv = document.getElementById('main-div')
