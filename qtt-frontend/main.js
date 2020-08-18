@@ -9,12 +9,23 @@ function main(){
 function startModalListener(){
     button = document.getElementById('modal-start-btn')
     button.addEventListener('click', function(event){
-    loadQuestions(currentLevel)
-    let scoreCounter = document.createElement('p')
-    scoreCounter.id = 'score-counter'
-    scoreCounter.innerText = `Score: ${userTotalScore}`
-    let banner = document.getElementById('banner')
-    banner.appendChild(scoreCounter) 
+        
+        let mainDiv = document.getElementById('main-div')
+        mainDiv.removeEventListener('click', handleGridClick)
+        mainDiv.innerHTML = ''
+        
+        userTotalScore = 0
+        userTurnCount = 0 
+        currentLevel = "easy"
+        
+        let scoreCounter = document.createElement('p')
+        let scoreDiv = document.getElementById('score-div')
+        scoreDiv.innerHTML = ''
+        scoreCounter.id = 'score-counter'
+        scoreCounter.innerText = `Score: ${userTotalScore}`
+        scoreDiv.appendChild(scoreCounter) 
+        
+        loadQuestions(currentLevel)
     })
 }
 
