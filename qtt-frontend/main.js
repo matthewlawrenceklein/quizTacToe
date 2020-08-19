@@ -214,21 +214,23 @@ function winLoseStateListener(){
                 }
         } else if (message === 'you lose'){
 
-            alert(message)
+
             currentLevel = 'easy'
             userTurnCount = 0
-            console.log(`Your score is ${userTotalScore}`);
-            let mainDiv = document.getElementById('main-div')
-            const grid = document.getElementById('main-div')
-            grid.removeEventListener('click', handleGridClick)
-            mainDiv.innerHTML = ''
-
-            loadQuestions(currentLevel)
-        }
+            userTotalScore = 0
+            document.getElementById('score-div').innerHTML = ''
+            document.getElementById('main-div').innerHTML = ''
+            document.getElementById('main-div').removeEventListener('click', handleGridClick)
+            youLoseModal()
+         }
     }
     
 }
-
+function youLoseModal(){
+    $('#youLoseModalCenter').modal({
+        focus: true
+      })
+}
 
 function nextLevelModal(){
     $('#nextLevelModalCenter').modal({
@@ -290,7 +292,9 @@ function gameEndModal(){
                 `
                 highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
 
-                highScores.forEach(renderScores)
+                for(i = 0; i < 5; i++){
+                    renderScores(highScores[i])
+                }
             })
     })
 }
