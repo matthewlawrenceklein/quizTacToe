@@ -17,6 +17,9 @@ function startModalListener(){
         userTotalScore = 0
         userTurnCount = 0 
         currentLevel = "easy"
+
+        document.getElementById('highscores').innerHTML = ''
+        document.getElementById('highscores').className = ''
         
         let scoreDiv = document.getElementById('score-div')
         scoreDiv.innerHTML = ''
