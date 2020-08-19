@@ -84,16 +84,17 @@
           You did it! You're a trivia champ! AND a tic tac toe champ! How nice for you! Your reward? Not only do you get to 
           add your name + score to the leaderboard, you also get to add a question of your own to our trivia database! 
           <br>
-          <form action="">
-            <textarea name="question-input" id="question-input" cols="50" rows="4" placeholder="your question">Enter Your Question</textarea> <br>
-            <input type="radio" name="true-false" id="true" value="true">
+          <form action="" id="user-question-form">
+            <textarea name="question-input" id="question-input" cols="50" rows="4">Enter Your Question</textarea> <br>
+            <textarea name="question-category" id="question-category" cols="20" rows="4">Category</textarea> <br>
+            <input type="radio" name="true-false" id="true-false" value="true">
             <label for="true">True</label><br>
-            <input type="radio" name="true-false" id="false" value="false">
+            <input type="radio" name="true-false" id="true-false" value="false">
             <label for="false">False</label><br>
+            <button type="submit" form="user-question-form" class="btn btn-primary" data-dismiss="modal" id="end-game-submit">Submit!</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Submit!</button>
         </div>
       </div>
     </div>

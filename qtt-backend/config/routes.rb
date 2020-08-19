@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_questions
+  resources :the_dumpsters
   resources :highscores
   resources :scoreboards
   resources :easy_questions

@@ -202,7 +202,7 @@ function winLoseStateListener(){
                 } else if (currentLevel === 'medium'){
                     currentLevel = 'hard'
                     let modalBody = document.getElementById('next-level-body')
-                    modalBody.innerText += "One more level to go! You can do it!"
+                    modalBody.innerText = "Super Job! One more level to go! You can do it!"
                     nextLevelModal()
                 } else if (currentLevel === 'hard'){
                     gameEndModal()
@@ -236,6 +236,34 @@ function gameEndModal(){
     $('#gameEndModalCenter').modal({
         focus: true
       })
+
+    const endSubmit = document.getElementById('end-game-submit')
+    endSubmit.addEventListener('click',function(event){
+        event.preventDefault()
+        
+        const questionBody = document.getElementById('question-input').value
+        const questionAnswer = document.getElementById('true-false').value
+        const questionCategory = document.getElementById('question-category')
+        const questionObj = {
+            questionBody: questionBody, 
+            answer: questionAnswer, 
+            category: questionCategory,
+            theDumpster_id: 1
+        }
+        const reqObj = {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(questionObj)
+        }
+
+        fetch('http://localhost:3000/user_questions', reqObj)
+            .then(resp => resp.json())
+            .then(questionData => {
+            })
+            
+    })
 }
 
 

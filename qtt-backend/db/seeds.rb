@@ -38,3 +38,6 @@ Highscore.create(score: 1240, scoreboard_id: first.id)
 Highscore.create(score: 2000, scoreboard_id: first.id)
 Highscore.create(score: 3500, scoreboard_id: first.id)
 Highscore.create(score: 800, scoreboard_id: first.id)
+
+TheDumpster.create()
+UserQuestion.create(questionBody: "how many boys are there", category: "boys", answer: "false", theDumpster_id: TheDumpster.first.id) 

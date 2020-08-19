@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_164959) do
+ActiveRecord::Schema.define(version: 2020_08_19_162513) do
 
   create_table "easy_questions", force: :cascade do |t|
     t.string "category"
@@ -51,6 +51,21 @@ ActiveRecord::Schema.define(version: 2020_08_18_164959) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "the_dumpsters", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "user_questions", force: :cascade do |t|
+    t.string "questionBody"
+    t.string "answer"
+    t.string "category"
+    t.integer "theDumpster_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["theDumpster_id"], name: "index_user_questions_on_theDumpster_id"
   end
 
   add_foreign_key "highscores", "scoreboards"
