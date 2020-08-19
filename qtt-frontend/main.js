@@ -75,7 +75,6 @@ function handleGridClick(event){
                 
                 let question = decodeHtml(questionData.question) 
 
-                // ${questionData.answer} <br>
                 // ${questionData.difficulty} <br>
                 
                 if(questionDiv.dataset.displayState !== 'showing') {
@@ -112,7 +111,7 @@ function answerListener(question){
     targetDiv.addEventListener('click', function(event){
 
         if(userTurnCount === 8){
-            console.log('no one wins');
+            alert('no one wins');
         }
 
         if (event.target.dataset.id === `${question.id}-true` || event.target.dataset.id === `${question.id}-false`){
@@ -153,7 +152,6 @@ function winLoseStateListener(){
     }
 
     function winState(condition, message){
-
     
         if (condition.includes('0') && condition.includes('1') && condition.includes('2')){
             winSteps(message) 
@@ -190,7 +188,6 @@ function winLoseStateListener(){
             let counter = document.getElementById('score-counter')
             counter.innerText =  `Score: ${userTotalScore}`
 
-
             userTurnCount = 0
             console.log(`Your score is ${userTotalScore}`);
             let mainDiv = document.getElementById('main-div')
@@ -199,9 +196,13 @@ function winLoseStateListener(){
             mainDiv.innerHTML = ''
                 if(currentLevel === 'easy'){
                     currentLevel = 'medium'
+                    let modalBody = document.getElementById('next-level-body')
+                    modalBody.innerText += "It's gonna get a little harder. Good luck!"
                     nextLevelModal()
                 } else if (currentLevel === 'medium'){
                     currentLevel = 'hard'
+                    let modalBody = document.getElementById('next-level-body')
+                    modalBody.innerText += "One more level to go! You can do it!"
                     nextLevelModal()
                 } else if (currentLevel === 'hard'){
                     gameEndModal()
