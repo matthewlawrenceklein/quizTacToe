@@ -16,7 +16,7 @@
 
             
         </div>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#introModalCenter">
             Play Quiz Tac Toe
         </button>
     </div>
@@ -31,11 +31,11 @@
 
   
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal fade" id="introModalCenter" tabindex="-1" role="dialog" aria-labelledby="introModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Quiz Tac Toe - Rules</h5>
+          <h5 class="modal-title" id="introModalLongTitle">Quiz Tac Toe - Rules</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -52,6 +52,52 @@
     </div>
   </div>
 
+  <div class="modal fade" id="nextLevelModalCenter" tabindex="-1" role="dialog" aria-labelledby="nextLevelModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="nextLevelModalLongTitle">Nice Job!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You're ready to move on to the next level!
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Let's Go!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="gameEndModalCenter" tabindex="-1" role="dialog" aria-labelledby="gameEndModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="gameEndModalLongTitle">You WIN!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          You did it! You're a trivia champ! AND a tic tac toe champ! How nice for you! Your reward? Not only do you get to 
+          add your name + score to the leaderboard, you also get to add a question of your own to our trivia database! 
+          <br>
+          <form action="">
+            <textarea name="question-input" id="question-input" cols="50" rows="4" placeholder="your question">Enter Your Question</textarea> <br>
+            <input type="radio" name="true-false" id="true" value="true">
+            <label for="true">True</label><br>
+            <input type="radio" name="true-false" id="false" value="false">
+            <label for="false">False</label><br>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Submit!</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <script src="main.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

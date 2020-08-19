@@ -18,13 +18,16 @@ function startModalListener(){
         userTurnCount = 0 
         currentLevel = "easy"
         
-        let scoreCounter = document.createElement('p')
         let scoreDiv = document.getElementById('score-div')
         scoreDiv.innerHTML = ''
+
+        let scoreCounter = document.createElement('p')
         scoreCounter.id = 'score-counter'
         scoreCounter.innerText = `Score: ${userTotalScore}`
-        scoreDiv.appendChild(scoreCounter) 
+
         
+        scoreDiv.appendChild(scoreCounter) 
+
         loadQuestions(currentLevel)
     })
 }
@@ -71,12 +74,15 @@ function handleGridClick(event){
                 let questionDiv = document.getElementById(`${questionData.id}`);
                 
                 let question = decodeHtml(questionData.question) 
+
+                // ${questionData.answer} <br>
+                // ${questionData.difficulty} <br>
                 
                 if(questionDiv.dataset.displayState !== 'showing') {
                     questionDiv.innerHTML = `
                         ${question.innerText} <br>
                         ${questionData.answer} <br>
-                        ${questionData.difficulty} <br>
+
                         <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
                         <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
                     `
@@ -193,12 +199,12 @@ function winLoseStateListener(){
             mainDiv.innerHTML = ''
                 if(currentLevel === 'easy'){
                     currentLevel = 'medium'
-                    loadQuestions(currentLevel)
+                    nextLevelModal()
                 } else if (currentLevel === 'medium'){
                     currentLevel = 'hard'
-                    loadQuestions(currentLevel)
+                    nextLevelModal()
                 } else if (currentLevel === 'hard'){
-                    alert(message)
+                    gameEndModal()
                 }
         } else if (message === 'you lose'){
 
@@ -218,8 +224,18 @@ function winLoseStateListener(){
 }
 
 
+function nextLevelModal(){
+    $('#nextLevelModalCenter').modal({
+        focus: true
+      })
+    loadQuestions(currentLevel)
+}
 
-
+function gameEndModal(){
+    $('#gameEndModalCenter').modal({
+        focus: true
+      })
+}
 
 
 main()
