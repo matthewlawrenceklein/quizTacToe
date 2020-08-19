@@ -9,6 +9,8 @@ class UserQuestionsController < ApplicationController
 
     def create
         userQuestion = UserQuestion.create(question_params)
+
+        render json: userQuestion
     end
 
     private

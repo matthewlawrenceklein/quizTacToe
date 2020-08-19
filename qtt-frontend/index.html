@@ -27,6 +27,11 @@
         <div class="container" id="main-div">
         </div>
     </div>
+    <div class="score-container">
+      <ul id='highscores' class=>
+            
+      </ul>
+    </div>
 
 
   
@@ -81,10 +86,12 @@
           </button>
         </div>
         <div class="modal-body">
+          <h2 id='user-score'></h2> 
           You did it! You're a trivia champ! AND a tic tac toe champ! How nice for you! Your reward? Not only do you get to 
           add your name + score to the leaderboard, you also get to add a question of your own to our trivia database! 
           <br>
           <form action="" id="user-question-form">
+            <input type="text" name="username-input" id="username-input" placeholder="Your Name"> <br>
             <textarea name="question-input" id="question-input" cols="50" rows="4">Enter Your Question</textarea> <br>
             <textarea name="question-category" id="question-category" cols="20" rows="4">Category</textarea> <br>
             <input type="radio" name="true-false" id="true-false" value="true">

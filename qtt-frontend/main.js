@@ -205,6 +205,8 @@ function winLoseStateListener(){
                     modalBody.innerText = "Super Job! One more level to go! You can do it!"
                     nextLevelModal()
                 } else if (currentLevel === 'hard'){
+                    let modalh2 = document.getElementById('user-score')
+                    modalh2.innerHTML = `Your score is ${userTotalScore}!`
                     gameEndModal()
                 }
         } else if (message === 'you lose'){
@@ -243,7 +245,7 @@ function gameEndModal(){
         
         const questionBody = document.getElementById('question-input').value
         const questionAnswer = document.getElementById('true-false').value
-        const questionCategory = document.getElementById('question-category')
+        const questionCategory = document.getElementById('question-category').value
         const questionObj = {
             questionBody: questionBody, 
             answer: questionAnswer, 
@@ -262,8 +264,42 @@ function gameEndModal(){
             .then(resp => resp.json())
             .then(questionData => {
             })
-            
+        
+        // grab user submitted name
+        // conditional to check if name exists in db
+        // patch or post high score depending on above
+        // make fetch request
+
+        // make new fetch request for high scores
+        // sort by score 
+        // display top 5 high scores 
+
+        fetch('http://localhost:3000/highscores')
+            .then(resp => resp.json())
+            .then(highScores => {
+                let scoresUl = document.getElementById('highscores')
+                scoresUl.className = 'score-item'
+                const mainDiv = document.getElementById('main-div')
+                mainDiv.innerHTML = `
+                
+                <h2 id="banner"> HIGH SCORES <h2> <br>
+                
+                `
+                highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
+
+                highScores.forEach(renderScores)
+            })
     })
+}
+
+function renderScores(scoreObj){
+
+    let scoreLi = document.createElement('li')
+    scoreLi.className = 'highscore'
+    scoreLi.innerText = `
+        ${scoreObj.username} ................. ${scoreObj.score}
+    `
+    document.getElementById('highscores').appendChild(scoreLi)
 }
 
 

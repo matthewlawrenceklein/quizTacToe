@@ -18,6 +18,7 @@
     display: flex;
     width: 70%;
     flex-wrap: wrap;
+    text-align: center;
     align-items: center;
     justify-content: space-between;
     border-radius: 25px;
@@ -28,6 +29,7 @@
     flex: 0 32%;
     width: 70px;
     height: 160px;
+    padding-top: 15px;
     margin-bottom: 2%; /* (100-32*3)/2 */
     background-color: burlywood;
     border: 3px solid;
@@ -41,13 +43,23 @@
 
     background-color: palevioletred;
     font-size: 500%;
+    animation: wrongColor .5s ease;
+  }
 
+  @keyframes wrongColor {
+    from {background-color: burlywood;}
+    to {background-color: palevioletred;}
   }
 
   .rightAnswerStyling {
-
     background-color: yellowgreen;
     font-size: 500%;
+    animation: rightColor .5s ease;
+  }
+
+  @keyframes rightColor {
+    from {background-color: burlywood;}
+    to {background-color: yellowgreen;}
   }
 
   body {
@@ -72,4 +84,28 @@
 #score-counter {
   font-size: 200%;
   margin-top: 20px;
+}
+
+.score-container{
+  padding-top: 30px;
+  display: flex;
+  width: 40%;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 25px;
+  margin: 20px;
+}
+
+.score-item {
+  flex: auto;
+  width: auto;
+  height: auto;
+  margin-bottom: 2%; /* (100-32*3)/2 */
+  border: 3px solid;
+  box-shadow: 3px 3px teal;
+  border-color: darkcyan;
+  background-color: burlywood;
+  margin: 5px;
+  border-radius: 20px;
 }
