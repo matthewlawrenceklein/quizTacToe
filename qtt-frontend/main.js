@@ -192,7 +192,6 @@ function winLoseStateListener(){
             counter.innerText =  `Score: ${userTotalScore}`
 
             userTurnCount = 0
-            console.log(`Your score is ${userTotalScore}`);
             let mainDiv = document.getElementById('main-div')
             const grid = document.getElementById('main-div')
             grid.removeEventListener('click', handleGridClick)
@@ -248,6 +247,7 @@ function gameEndModal(){
     endSubmit.addEventListener('click',function(event){
         event.preventDefault()
         
+        const username = document.getElementById('username-input').value
         const questionBody = document.getElementById('question-input').value
         const questionAnswer = document.getElementById('true-false').value
         const questionCategory = document.getElementById('question-category').value
@@ -275,13 +275,22 @@ function gameEndModal(){
         // patch or post high score depending on above
         // make fetch request
 
-        // make new fetch request for high scores
-        // sort by score 
-        // display top 5 high scores 
 
         fetch('http://localhost:3000/highscores')
             .then(resp => resp.json())
             .then(highScores => {
+
+                const userCheck = highScores.filter(function(score){
+                    score.username === username
+                })
+                
+                if (userCheck.length > 0 && userTotalScore > userCheck[0].score){
+                    highscorePatch(userCheck[0])
+                } else if (userCheck.length = 0){
+                    highscorePost(username)
+                }    
+                
+
                 let scoresUl = document.getElementById('highscores')
                 scoresUl.className = 'score-item'
                 const mainDiv = document.getElementById('main-div')
@@ -308,6 +317,54 @@ function renderScores(scoreObj){
     `
     document.getElementById('highscores').appendChild(scoreLi)
 }
+
+function highscorePatch(userData){
+    const highscoreObj = {
+        score: userTotalScore,
+        username: userData.username
+    }
+
+    const reqObj = {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(highscoreObj)
+    }
+
+    fetch(`http://localhost:3000/highscores/${userData.id}`, reqObj)
+        .then(resp => resp.json())
+        .then(userData => {
+            console.log(userData);
+        })
+}
+
+function highscorePost(username){
+    const highscoreObj = {
+        score: userTotalScore,
+        username: username
+    }
+    console.log(highscoreObj);
+
+    const reqObj = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(highscoreObj)
+    }
+
+    fetch(`http://localhost:3000/highscores/`, reqObj)
+        .then(resp => resp.json())
+        .then(userData => {
+            console.log(userData);
+        })
+}
+
+
+
+
+
 
 
 main()
