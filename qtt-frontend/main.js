@@ -281,12 +281,6 @@ function gameEndModal(){
                     }
                 }
 
-                highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
-
-                for(i = 0; i < 5; i++){
-                    renderScores(highScores[i])
-                }
-
                 let scoresUl = document.getElementById('highscores')
                 scoresUl.className = 'score-item'
                 const mainDiv = document.getElementById('main-div')
@@ -333,12 +327,24 @@ function highscorePatch(userData){
         },
         body: JSON.stringify(highscoreObj)
     }
-
     fetch(`http://localhost:3000/highscores/${userData.id}`, reqObj)
         .then(resp => resp.json())
         .then(userData => {
-            console.log(userData);
+            fetch('http://localhost:3000/highscores')
+                .then(resp => resp.json())
+                .then(highScores => {
+                    highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
+
+                    for(i = 0; i < 5; i++){
+                        renderScores(highScores[i])
+                    }
+                })
+
+
+
         })
+    
+            
 }
 
 
@@ -370,16 +376,6 @@ function highscorePost(username){
         })
 }
 
-
-function getScores(){
-    return fetch(`http://localhost:3000/highscores`)
-        .then(resp => resp.json())
-        .then(allQuestions => {
-            return allQuestions
-        })
-    }
-
-console.log(getScores());
 
 main()
 
