@@ -84,7 +84,6 @@ function handleGridClick(event){
                     questionDiv.innerHTML = `
                         ${question.innerText} <br>
                         ${questionData.answer} <br>
-
                         <button class="button" value="true" data-id='${questionData.id}-true'> TRUE </button>
                         <button class="button" value="false" data-id='${questionData.id}-false'> FALSE </button>
                     `
@@ -295,14 +294,7 @@ function gameEndModal(){
             })
     })
             })
-        
-        // grab user submitted name
-        // conditional to check if name exists in db
-        // patch or post high score depending on above
-        // make fetch request
-
-
-        
+                
 }
 
 function renderScores(scoreObj){
