@@ -20,22 +20,16 @@ function startModalListener(){
 
         document.getElementById('highscores').innerHTML = ''
         document.getElementById('highscores').className = ''
-        
-        let scoreDiv = document.getElementById('score-div')
-        scoreDiv.innerHTML = ''
+        document.getElementById('score-div').innerHTML = ''
 
         let scoreCounter = document.createElement('p')
         scoreCounter.id = 'score-counter'
         scoreCounter.innerText = `Score: ${userTotalScore}`
-
-        
-        scoreDiv.appendChild(scoreCounter) 
+        document.getElementById('score-div').appendChild(scoreCounter) 
 
         loadQuestions(currentLevel)
     })
 }
-
-
 
 function loadQuestions(difficulty){
     fetch(`http://localhost:3000/${difficulty}_questions/`)
@@ -52,7 +46,6 @@ function loadQuestions(difficulty){
 }
 
 function renderCategory(question, squareId){
-    let mainDiv = document.getElementById('main-div')
     let questionDiv = document.createElement('div')
     questionDiv.className = `${squareId} item  `
     questionDiv.dataset.id = question.id 
@@ -60,12 +53,12 @@ function renderCategory(question, squareId){
     questionDiv.dataset.squareId = squareId
     questionDiv.dataset.displayState = ''
     questionDiv.id = question.id
-
+    
     let txt = decodeHtml(question.category)
     let questionText = txt.value;
-
+    
     questionDiv.innerText = questionText
-    mainDiv.appendChild(questionDiv)
+    document.getElementById('main-div').appendChild(questionDiv)
 
 }
 function handleGridClick(event){
@@ -74,11 +67,8 @@ function handleGridClick(event){
         fetch(`http://localhost:3000/${currentLevel}_questions/${questionId}`)
             .then(resp => resp.json())
             .then(questionData => {
-                let questionDiv = document.getElementById(`${questionData.id}`);
-                
+                let questionDiv = document.getElementById(`${questionData.id}`);                
                 let question = decodeHtml(questionData.question) 
-
-                // ${questionData.difficulty} <br>
                 
                 if(questionDiv.dataset.displayState !== 'showing') {
                     questionDiv.innerHTML = `
@@ -94,10 +84,8 @@ function handleGridClick(event){
     }
 }
 
-function addGridListener(difficulty){
-
-    const grid = document.getElementById('main-div')
-    grid.addEventListener('click', handleGridClick)
+function addGridListener(){
+    document.getElementById('main-div').addEventListener('click', handleGridClick)
 }
 
 function decodeHtml(html) {
@@ -187,27 +175,21 @@ function winLoseStateListener(){
         if (message === 'you win'){
 
             userTotalScore += roundScore 
-            let counter = document.getElementById('score-counter')
-            counter.innerText =  `Score: ${userTotalScore}`
+            document.getElementById('score-counter').innerText =  `Score: ${userTotalScore}`
 
             userTurnCount = 0
-            let mainDiv = document.getElementById('main-div')
-            const grid = document.getElementById('main-div')
-            grid.removeEventListener('click', handleGridClick)
-            mainDiv.innerHTML = ''
+            document.getElementById('main-div').removeEventListener('click', handleGridClick)
+            document.getElementById('main-div').innerHTML = ''
                 if(currentLevel === 'easy'){
                     currentLevel = 'medium'
-                    let modalBody = document.getElementById('next-level-body')
-                    modalBody.innerText += "It's gonna get a little harder. Good luck!"
+                    document.getElementById('next-level-body').innerText += "It's gonna get a little harder. Good luck!"
                     nextLevelModal()
                 } else if (currentLevel === 'medium'){
                     currentLevel = 'hard'
-                    let modalBody = document.getElementById('next-level-body')
-                    modalBody.innerText = "Super Job! One more level to go! You can do it!"
+                    document.getElementById('next-level-body').innerText = "Super Job! One more level to go! You can do it!"
                     nextLevelModal()
                 } else if (currentLevel === 'hard'){
-                    let modalh2 = document.getElementById('user-score')
-                    modalh2.innerHTML = `Your score is ${userTotalScore}!`
+                    document.getElementById('user-score').innerHTML = `Your score is ${userTotalScore}!`
                     gameEndModal()
                 }
         } else if (message === 'you lose'){
@@ -277,19 +259,14 @@ function gameEndModal(){
                         highscorePatch(highScores[i])
                     } 
                 }
-
                 let filteredScores = highScores.filter(score => score.username === username)
                 if (filteredScores.length === 0){
                     highscorePost(username)
                 }
 
-
-                let scoresUl = document.getElementById('highscores')
-                scoresUl.className = 'score-item'
-                const mainDiv = document.getElementById('main-div')
-                mainDiv.innerHTML = `
+                document.getElementById('highscores').className = 'score-item'
+                document.getElementById('main-div').innerHTML = `
                 <h1 id="banner2" class="item"> HIGH SCORES <h1> <br>
-                
                 `
             })
     })
@@ -370,7 +347,6 @@ function highscorePost(username){
 
         })
 }
-
 
 main()
 
