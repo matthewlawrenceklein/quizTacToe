@@ -268,28 +268,24 @@ function gameEndModal(){
         fetch('http://localhost:3000/user_questions', reqObj)
             .then(resp => resp.json())
             .then(questionData => {
-            })
-        
-        // grab user submitted name
-        // conditional to check if name exists in db
-        // patch or post high score depending on above
-        // make fetch request
 
+            fetch('http://localhost:3000/highscores')
+                .then(resp => resp.json())
+                .then(highScores => {
 
-        fetch('http://localhost:3000/highscores')
-            .then(resp => resp.json())
-            .then(highScores => {
+                for (i = 0; i < highScores.length; i++){
+                    if (highScores[i].username == username && userTotalScore > highScores[i].score){
+                        highscorePatch(highScores[i])
+                    } else {
 
-                const userCheck = highScores.filter(function(score){
-                    score.username === username
-                })
-                
-                if (userCheck.length > 0 && userTotalScore > userCheck[0].score){
-                    highscorePatch(userCheck[0])
-                } else if (userCheck.length = 0){
-                    highscorePost(username)
-                }    
-                
+                    }
+                }
+
+                highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
+
+                for(i = 0; i < 5; i++){
+                    renderScores(highScores[i])
+                }
 
                 let scoresUl = document.getElementById('highscores')
                 scoresUl.className = 'score-item'
@@ -299,13 +295,17 @@ function gameEndModal(){
                 <h2 id="banner"> HIGH SCORES <h2> <br>
                 
                 `
-                highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
-
-                for(i = 0; i < 5; i++){
-                    renderScores(highScores[i])
-                }
             })
     })
+            })
+        
+        // grab user submitted name
+        // conditional to check if name exists in db
+        // patch or post high score depending on above
+        // make fetch request
+
+
+        
 }
 
 function renderScores(scoreObj){
@@ -324,6 +324,8 @@ function highscorePatch(userData){
         username: userData.username
     }
 
+    console.log(highscoreObj);
+
     const reqObj = {
         method: 'PATCH',
         headers: {
@@ -338,6 +340,13 @@ function highscorePatch(userData){
             console.log(userData);
         })
 }
+
+
+
+
+
+
+
 
 function highscorePost(username){
     const highscoreObj = {
@@ -362,10 +371,15 @@ function highscorePost(username){
 }
 
 
+function getScores(){
+    return fetch(`http://localhost:3000/highscores`)
+        .then(resp => resp.json())
+        .then(allQuestions => {
+            return allQuestions
+        })
+    }
 
-
-
-
+console.log(getScores());
 
 main()
 

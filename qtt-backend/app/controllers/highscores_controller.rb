@@ -15,6 +15,13 @@ class HighscoresController < ApplicationController
         highscore = Highscore.create(highscore_params, scoreboard_id: scoreboard_id)
     end
 
+    def update
+        highscore = Highscore.all.find(params[:id])
+        highscore.update(score: params[:score])
+        render json: highscore 
+
+    end
+
     private
 
     def highscore_params

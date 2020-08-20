@@ -5,6 +5,7 @@ MediumQuestion.destroy_all
 HardQuestion.destroy_all
 Highscore.destroy_all
 Scoreboard.destroy_all
+UserQuestion.destroy_all
 
 easy_response = HTTParty.get('https://opentdb.com/api.php?amount=50&difficulty=easy&type=boolean')
 easy_hash = easy_response.to_hash 
