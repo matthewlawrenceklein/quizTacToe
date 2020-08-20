@@ -11,8 +11,9 @@ class HighscoresController < ApplicationController
     end
 
     def create
-        scoreboard_id = ScoreBoard.first.id 
-        highscore = Highscore.create(highscore_params, scoreboard_id: scoreboard_id)
+        # scoreboard_id = ScoreBoard.first.id 
+        highscore = Highscore.create(highscore_params)
+        render json: highscore
     end
 
     def update
@@ -25,7 +26,7 @@ class HighscoresController < ApplicationController
     private
 
     def highscore_params
-        params.permit(:score, :username)
+        params.permit(:score, :username, :scoreboard_id)
     end
 
 end

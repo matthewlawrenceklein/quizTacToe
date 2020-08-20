@@ -276,10 +276,14 @@ function gameEndModal(){
                 for (i = 0; i < highScores.length; i++){
                     if (highScores[i].username == username && userTotalScore > highScores[i].score){
                         highscorePatch(highScores[i])
-                    } else {
-
-                    }
+                    } 
                 }
+
+                let filteredScores = highScores.filter(score => score.username === username)
+                if (filteredScores.length === 0){
+                    highscorePost(username)
+                }
+
 
                 let scoresUl = document.getElementById('highscores')
                 scoresUl.className = 'score-item'
@@ -339,27 +343,15 @@ function highscorePatch(userData){
                         renderScores(highScores[i])
                     }
                 })
-
-
-
-        })
-    
-            
+        })        
 }
-
-
-
-
-
-
-
 
 function highscorePost(username){
     const highscoreObj = {
         score: userTotalScore,
-        username: username
+        username: username,
+        scoreboard_id: 10
     }
-    console.log(highscoreObj);
 
     const reqObj = {
         method: 'POST',
@@ -369,10 +361,21 @@ function highscorePost(username){
         body: JSON.stringify(highscoreObj)
     }
 
-    fetch(`http://localhost:3000/highscores/`, reqObj)
+    fetch(`http://localhost:3000/highscores`, reqObj)
         .then(resp => resp.json())
         .then(userData => {
             console.log(userData);
+
+            fetch('http://localhost:3000/highscores')
+                .then(resp => resp.json())
+                .then(highScores => {
+                    highScores.sort((a, b) => (a.score < b.score) ? 1 : -1)
+
+                    for(i = 0; i < 5; i++){
+                        renderScores(highScores[i])
+                    }
+                })
+
         })
 }
 
