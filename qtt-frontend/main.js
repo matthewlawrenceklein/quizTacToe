@@ -289,8 +289,7 @@ function gameEndModal(){
                 scoresUl.className = 'score-item'
                 const mainDiv = document.getElementById('main-div')
                 mainDiv.innerHTML = `
-                
-                <h2 id="banner"> HIGH SCORES <h2> <br>
+                <h1 id="banner2" class="item"> HIGH SCORES <h1> <br>
                 
                 `
             })
@@ -334,6 +333,7 @@ function highscorePatch(userData){
     fetch(`http://localhost:3000/highscores/${userData.id}`, reqObj)
         .then(resp => resp.json())
         .then(userData => {
+            
             fetch('http://localhost:3000/highscores')
                 .then(resp => resp.json())
                 .then(highScores => {

@@ -91,7 +91,7 @@
 .score-container{
   padding-top: 30px;
   display: flex;
-  width: 40%;
+  width: 100%;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -100,6 +100,7 @@
 }
 
 .score-item {
+  text-align: center ;
   flex: auto;
   width: auto;
   height: auto;
@@ -110,4 +111,8 @@
   background-color: burlywood;
   margin: 5px;
   border-radius: 20px;
+}
+
+#banner2 {
+  color: black; 
 }
